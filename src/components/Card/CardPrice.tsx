@@ -3,12 +3,12 @@ import React from "react";
 import { css } from "@emotion/react";
 
 
-interface TilePriceProps {
+interface CardPriceProps {
   salePrice: number;
   originalPrice: number;
   installment: number;
 }
-function TilePrice(props: TilePriceProps) {
+function CardPrice(props: CardPriceProps) {
   return (
     <>
       <div
@@ -68,4 +68,4 @@ function TilePrice(props: TilePriceProps) {
   );
 }
 
-export default TilePrice;
+export default CardPrice;
