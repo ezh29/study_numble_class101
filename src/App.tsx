@@ -6,21 +6,43 @@ import SwiperSlider from "./components/Carousel/SwiperSlider";
 import { SwiperSlide } from "swiper/react";
 
 import CardTimeDeal from "./components/Card/CardTimeDeal";
+import CardMdDeal from "./components/Card/CardMdDeal";
+import CardPopularEvent from "./components/Card/CardPopularEvent";
 import { Grid, Row, Col, Section } from "@class101/ui";
-import axios from "axios";
 
 function App() {
-  const [postDatas, setPostDatas] = useState<any[]>([]);
+  const [timeDealDatas, setTimeDealDatas] = useState<any[]>([]);
+  const [mdRecommendDatas, setMdRecommendDatas] = useState<any[]>([]);
+  const [popularEventDatas, setPopularEventDatas] = useState<any[]>([]);
+  const [openSoonDatas, setOpenSoonDatas] = useState<any[]>([]);
 
   useEffect(() => {
-    getDatas();
+    getTimeDealDatas();
+    getMdRecommendDatas();
+    getPopularEventDatas();
+    getOpenSoonDatas();
   }, []);
 
-  async function getDatas() {
-    const res = await axios.get("http://localhost:4000/time_deal");
-    setPostDatas(res.data);
+  // 오늘의 특가! TIMEDEAL
+  async function getTimeDealDatas() {
+    const jsonDatas = require("./json/data.json");
+    setTimeDealDatas(jsonDatas.time_deal);
   }
-  console.log(postDatas);
+  //MD추천 클래스
+  async function getMdRecommendDatas() {
+    const jsonDatas = require("./json/data.json");
+    setMdRecommendDatas(jsonDatas.md_recommend);
+  }
+  //진행중인 인기 이벤트
+  async function getPopularEventDatas() {
+    const jsonDatas = require("./json/data.json");
+    setPopularEventDatas(jsonDatas.popular_event);
+  }
+  //오픈 예정 클래스
+  async function getOpenSoonDatas() {
+    const jsonDatas = require("./json/data.json");
+    setOpenSoonDatas(jsonDatas.open_soon);
+  }
 
   return (
     <>
@@ -33,21 +55,72 @@ function App() {
               to="/"
               linkText="전체 클래스 보기"
             >
-              <SwiperSlider>
-                {postDatas.map((postData) => (
-                  <SwiperSlide key={postData.id}>
+              <SwiperSlider
+                slidesPerViewLg={4}
+                slidesPerViewSm={2}
+                length={timeDealDatas.length}
+              >
+                {timeDealDatas.map((timeDealData) => (
+                  <SwiperSlide key={timeDealData.id}>
                     <CardTimeDeal
-                      key={postData.id}
-                      title={postData.title}
-                      img={postData.img}
-                      creator={postData.creator}
-                      coupon={postData.coupon}
-                      thumsUp={postData.thumsUp}
-                      like={postData.like}
-                      salePrice={postData.price.salePrice}
-                      originalPrice={postData.price.originalPrice}
-                      installment={postData.price.installment}
+                      key={timeDealData.id}
+                      title={timeDealData.title}
+                      img={timeDealData.img}
+                      creator={timeDealData.creator}
+                      coupon={timeDealData.coupon}
+                      thumsUp={timeDealData.thumsUp}
+                      like={timeDealData.like}
+                      salePrice={timeDealData.price.salePrice}
+                      originalPrice={timeDealData.price.originalPrice}
+                      installment={timeDealData.price.installment}
                     ></CardTimeDeal>
+                  </SwiperSlide>
+                ))}
+              </SwiperSlider>
+            </Section>
+            <Section title="MD 추천 클래스" to="/">
+              <SwiperSlider
+                slidesPerViewLg={4}
+                slidesPerViewSm={2}
+                length={mdRecommendDatas.length}
+              >
+                {mdRecommendDatas.map((mdRecommendData) => (
+                  <SwiperSlide key={mdRecommendData.id}>
+                    <CardMdDeal
+                      key={mdRecommendData.id}
+                      title={mdRecommendData.title}
+                      img={mdRecommendData.img}
+                      creator={mdRecommendData.creator}
+                      coupon={mdRecommendData.coupon}
+                      thumsUp={mdRecommendData.thumsUp}
+                      like={mdRecommendData.like}
+                      salePrice={mdRecommendData.price?.salePrice}
+                      originalPrice={mdRecommendData.price?.originalPrice}
+                      installment={mdRecommendData.price?.installment}
+                    ></CardMdDeal>
+                  </SwiperSlide>
+                ))}
+              </SwiperSlider>
+            </Section>
+            <Section
+              title="진행중인 인기 이벤트"
+              to="/"
+              linkText="전체 이벤트 보기"
+            >
+              <SwiperSlider
+                slidesPerViewLg={3}
+                slidesPerViewSm={2}
+                length={popularEventDatas.length}
+              >
+                {popularEventDatas.map((popularEventData) => (
+                  <SwiperSlide key={popularEventData.id}>
+                    <CardPopularEvent
+                      key={popularEventData.id}
+                      title={popularEventData.title}
+                      img={popularEventData.img}
+                      startDate={popularEventData.period.startDate}
+                      finishDate={popularEventData.period.finishDate}
+                    ></CardPopularEvent>
                   </SwiperSlide>
                 ))}
               </SwiperSlider>
