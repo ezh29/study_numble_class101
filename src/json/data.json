@@ -245,6 +245,20 @@
     ],
     "md_recommend": [
       {
+        "id": 0,
+        "title": "null 테스트 입니다",
+        "creator": "테스트",
+        "img": "https://images.velog.io/images/kados22/post/13566957-f804-4d1d-a85a-db91f963d78a/MD%20Class%20Card%20%EC%8D%B8%EB%84%A4%EC%9D%BC%203.png",
+        "like": 249,
+        "thumsUp": null,
+        "price": {
+          "originalPrice": 236200,
+          "salePrice": 137000,
+          "installment": 0
+        },
+        "coupon": null
+      },
+      {
         "id": 1,
         "title": "5분만 더! 일찍 일어나서 완성하는 아침 루틴",
         "creator": "Glory",
@@ -334,6 +348,7 @@
         },
         "coupon": 3
       }
+      
     ],
     "open_soon": [
       {
@@ -437,6 +452,24 @@
       }
     ],
     "popular_event": [
+      {
+        "id": 0,
+        "title": "지난 이벤트 테스트 finishDate 21-01-10",
+        "img": "https://images.velog.io/images/kados22/post/174a2695-8be3-487d-a9f1-c7845ebd2b6c/%EC%9D%B4%EB%B2%A4%ED%8A%B8%20Card%201.png",
+        "period": {
+          "startDate": "21-12-26",
+          "finishDate": "21-01-10"
+        }
+      },
+      {
+        "id": 0,
+        "title": "내년 이벤트 테스트 finishDate 23-01-10",
+        "img": "https://images.velog.io/images/kados22/post/174a2695-8be3-487d-a9f1-c7845ebd2b6c/%EC%9D%B4%EB%B2%A4%ED%8A%B8%20Card%201.png",
+        "period": {
+          "startDate": "21-12-26",
+          "finishDate": "23-01-10"
+        }
+      },
       {
         "id": 1,
         "title": "클래스 신청만해도 아이패드 증정",
