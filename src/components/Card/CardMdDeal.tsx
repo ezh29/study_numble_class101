@@ -1,14 +1,12 @@
 import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { Card, Caption1, Badge, Icon, Colors } from "@class101/ui";
-import CardTimeDealTimer from "./CardTimeDealTimer";
+import { Card, Caption1, Colors, CoverRatio } from "@class101/ui";
 import CardPrice from "./CardPrice";
 import CardLikeAndThumsUp from "./CardLikeAndThumsUp";
 import CardCoupon from "./CardCoupon";
 import CardLikeBtn from "./CardLikeBtn";
-
-interface postData {
+interface CardMdDealProps {
   title: string;
   img: string;
   creator: string;
@@ -20,7 +18,7 @@ interface postData {
   coupon: number;
 }
 
-function CardTimeDeal({
+function CardMdDeal({
   title,
   img,
   creator,
@@ -30,19 +28,17 @@ function CardTimeDeal({
   thumsUp,
   like,
   coupon,
-}: postData) {
+}: CardMdDealProps) {
   return (
     <Card
       to={"/"}
       title={title}
       coverImage={img}
+      coverImageRatio={CoverRatio.RATIO_3X4}
       extraTop={
-        <>
-          <CardTimeDealTimer />
-          <Caption1 fontWeight={600} color={Colors.gray900}>
-            {creator}
-          </Caption1>
-        </>
+        <Caption1 fontWeight={600} color={Colors.gray900}>
+          {creator}
+        </Caption1>
       }
       extraBottom={
         <div style={{ marginLeft: "-4px", lineHeight: "0" }}>
@@ -50,17 +46,17 @@ function CardTimeDeal({
         </div>
       }
     >
-      {salePrice && (
+      {!!salePrice && (
         <CardPrice
           salePrice={salePrice}
           originalPrice={originalPrice}
           installment={installment}
         ></CardPrice>
       )}
-      {coupon && <CardCoupon coupon={coupon} />}
+      {!!coupon && <CardCoupon coupon={coupon} />}
       <CardLikeBtn />
     </Card>
   );
 }
 
-export default CardTimeDeal;
+export default CardMdDeal;

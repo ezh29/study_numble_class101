@@ -2,13 +2,13 @@ import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-
 interface CardPriceProps {
   salePrice: number;
   originalPrice: number;
   installment: number;
 }
-function CardPrice(props: CardPriceProps) {
+
+function CardPrice({ salePrice, originalPrice, installment }: CardPriceProps) {
   return (
     <>
       <div
@@ -36,7 +36,10 @@ function CardPrice(props: CardPriceProps) {
             margin-right: 4px;
           `}
         >
-          {Math.floor((props.salePrice / props.originalPrice) * 100)}%
+          {salePrice &&
+            originalPrice &&
+            Math.floor((salePrice / originalPrice) * 100)}
+          %
         </span>
         <span
           css={css`
@@ -48,9 +51,10 @@ function CardPrice(props: CardPriceProps) {
           `}
         >
           월{" "}
-          {props.salePrice
-            .toString()
-            .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
+          {salePrice &&
+            salePrice
+              .toString()
+              .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
           원
         </span>
         <span
@@ -61,7 +65,7 @@ function CardPrice(props: CardPriceProps) {
             color: #a2a2a2;
           `}
         >
-          ({props.installment}개월)
+          ({installment}개월)
         </span>
       </div>
     </>
