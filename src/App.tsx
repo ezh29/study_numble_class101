@@ -4,11 +4,12 @@ import "./App.css";
 import { css } from "@emotion/react";
 import SwiperSlider from "./components/Carousel/SwiperSlider";
 import { SwiperSlide } from "swiper/react";
+import { Grid, Row, Col, Section } from "@class101/ui";
 
 import CardTimeDeal from "./components/Card/CardTimeDeal";
 import CardMdDeal from "./components/Card/CardMdDeal";
 import CardPopularEvent from "./components/Card/CardPopularEvent";
-import { Grid, Row, Col, Section } from "@class101/ui";
+import CardOpenSoon from "./components/Card/CardOpenSoon";
 
 function App() {
   const [timeDealDatas, setTimeDealDatas] = useState<any[]>([]);
@@ -121,6 +122,32 @@ function App() {
                       startDate={popularEventData.period.startDate}
                       finishDate={popularEventData.period.finishDate}
                     ></CardPopularEvent>
+                  </SwiperSlide>
+                ))}
+              </SwiperSlider>
+            </Section>
+            <Section
+              title="오픈 예정 클래스"
+              description="오픈 예정인 클래스를 응원하면 얼리버드 오픈 시 알려드려요!"
+              to="/"
+              linkText="전체 이벤트 보기"
+            >
+              <SwiperSlider
+                slidesPerViewLg={4}
+                slidesPerViewSm={2}
+                length={openSoonDatas.length}
+              >
+                {openSoonDatas.map((openSoonData) => (
+                  <SwiperSlide key={openSoonData.id}>
+                    <CardOpenSoon
+                      key={openSoonData.id}
+                      title={openSoonData.title}
+                      img={openSoonData.img}
+                      creator={openSoonData.creator}
+                      goal={openSoonData.cheer?.goal}
+                      score={openSoonData.cheer?.score}
+                      finishDate={openSoonData.cheer?.finishDate}
+                    ></CardOpenSoon>
                   </SwiperSlide>
                 ))}
               </SwiperSlider>
