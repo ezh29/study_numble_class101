@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { Card } from "@class101/ui";
+import { Card, Caption1 } from "@class101/ui";
 import dayjs from "dayjs";
 import dayOfYear from "dayjs/plugin/dayOfYear";
 
@@ -71,28 +71,25 @@ function CardPopularEvent({
           >
             {title}
           </div>
-          <span
+          <div
             css={css`
-              font-size: 11px;
-              font-weight: normal;
-              color: rgb(26, 26, 26);
-              line-height: 16px;
-              letter-spacing: normal;
-              margin: 0px;
+              display: flex;
             `}
           >
-            <span
+            <Caption1
+              color="red"
+              fontWeight="700"
               css={css`
-                color: rgb(253, 48, 73);
-                font-weight: 700;
                 margin-right: 4px;
               `}
             >
               D-{getDdayFromToday(finishDate)}
-            </span>
-            {getDateFormat(startDate).date} ({getDateFormat(startDate).day}) ~{" "}
-            {getDateFormat(finishDate).date} ({getDateFormat(finishDate).day}){" "}
-          </span>
+            </Caption1>
+            <Caption1>
+              {getDateFormat(startDate).date} ({getDateFormat(startDate).day}) ~{" "}
+              {getDateFormat(finishDate).date} ({getDateFormat(finishDate).day}){" "}
+            </Caption1>
+          </div>
         </>
       }
     ></Card>
