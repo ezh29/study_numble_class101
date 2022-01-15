@@ -32,47 +32,7 @@ function CardOpenSoon({
   score,
   finishDate,
 }: CardOpenSoonProps) {
-  const [finishDateDday, setFinishDateDday] = useState<string>("");
-  const interval = useRef<any>();
-  //TODO 타이머 작업하기
-  const differ = useRef<any>();
-  const hours = useRef<any>();
-  const minutes = useRef<any>();
-  const seconds = useRef<any>();
 
-  const getFinishDateDday = (date: string) => {
-    dayjs.extend(dayOfYear);
-    const dDay = dayjs().dayOfYear() - dayjs(date).dayOfYear();
-    //이미 지난 오픈예정이면 -> 0
-    if (dDay > 0) return 0;
-    //하루 이하면 -> 초 타이머
-    if (dDay === -1) {
-      return getTimer(date);
-    }
-    //하루 초과면 -> 디데이
-    if (dDay < -1) {
-      return getDday(date);
-    }
-  };
-  //TODO 타이머 작업하기
-  const getTimer = (date: string) => {
-    interval.current = setInterval(() => {
-      console.log("타이머");
-      differ.current = dayjs(date).diff(dayjs(), "second");
-      hours.current = Math.floor((differ.current / (1000 * 60 * 60)) % 24); //시
-      minutes.current = Math.floor(((differ.current / 1000) * 60) % 60); //분
-      seconds.current = Math.floor((differ.current / 1000) % 60); //초
-      setFinishDateDday(
-        `${hours.current}:${minutes.current}:${seconds.current}`
-      );
-    }, 1000);
-  };
-  const getDday = (date: string) => {};
-
-  useEffect(() => {
-    getFinishDateDday(finishDate);
-    return () => clearInterval(interval.current);
-  }, []);
   return (
     <Card
       to={"/"}
@@ -97,8 +57,8 @@ function CardOpenSoon({
           display: flex;
         `}
       >
-        <Caption1 color={Colors.gray600}>응원 마감까지</Caption1>
-        <Caption1 color={Colors.red600}>{finishDateDday}남음</Caption1>
+        <Caption1 color={Colors.gray600} css={css`margin-right:4px`}>응원 마감까지</Caption1>
+        <Caption1 color={Colors.black}>{dayjs(finishDate).diff(dayjs(), "day")}일 남음</Caption1>
       </div>
 
       <Button
