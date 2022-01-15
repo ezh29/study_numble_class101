@@ -32,6 +32,7 @@ function MainSlider({ data: topEventDatas }: MainSliderProps) {
   const navigationPrevRef = useRef(null);
   const navigationNextRef = useRef(null);
   const [controlledSwiper, setControlledSwiper] = useState(null);
+  const [controlledSwiper2, setControlledSwiper2] = useState(null);
   // Slides current index
   const [currentIndex, updateCurrentIndex] = useState(0);
   // Swiper settings
@@ -112,6 +113,7 @@ function MainSlider({ data: topEventDatas }: MainSliderProps) {
                 }}
                 autoplay={{ delay: 3000 }}
                 controller={{ control: controlledSwiper }}
+                onSwiper={setControlledSwiper2}
               >
                 {topEventDatas.map((topEventData: any, index: number) => (
                   <SwiperSlide key={topEventData.id}>
@@ -132,6 +134,7 @@ function MainSlider({ data: topEventDatas }: MainSliderProps) {
               {...settings}
               modules={[Controller]}
               onSwiper={setControlledSwiper}
+              controller={{ control: controlledSwiper2 }}
               css={css`
                 width: 300px;
                 position: absolute;
