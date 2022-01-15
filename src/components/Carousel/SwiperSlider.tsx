@@ -20,6 +20,7 @@ interface SwiperSliderProps {
   slidesPerViewLg: number;
   slidesPerViewSm: number;
   length: number;
+  navigation?: boolean;
 }
 
 function SwiperSlider({
@@ -27,6 +28,7 @@ function SwiperSlider({
   slidesPerViewLg,
   slidesPerViewSm,
   length,
+  navigation = true,
 }: SwiperSliderProps) {
   // Swiper instance
   const swiperRef = useRef<any>(null);
@@ -46,9 +48,6 @@ function SwiperSlider({
         // when window width is >= 480px
         0: {
           slidesPerView: slidesPerViewSm,
-        },
-        renderBullet: (index: number, className: string) => {
-          return '<span class="' + className + '">' + (index + 1) + "</span>";
         },
       },
     }),
@@ -82,43 +81,49 @@ function SwiperSlider({
         ref={swiperRef}
         {...settings}
         modules={[Navigation]}
-        navigation={{
-          prevEl: navigationPrevRef.current,
-          nextEl: navigationNextRef.current,
-        }}
+        navigation={
+          navigation && {
+            prevEl: navigationPrevRef.current,
+            nextEl: navigationNextRef.current,
+          }
+        }
       >
         {children}
       </Swiper>
-      <Button
-        ref={navigationPrevRef}
-        css={css`
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          left: -60px;
-          background-color: #fff;
-          &:hover {
-            background-color: #f8f8f8;
-          }
-        `}
-      >
-        <Icon.ChevronLeft />
-      </Button>
-      <Button
-        ref={navigationNextRef}
-        css={css`
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          right: -60px;
-          background-color: #fff;
-          &:hover {
-            background-color: #f8f8f8;
-          }
-        `}
-      >
-        <Icon.ChevronRight />
-      </Button>
+      {navigation && (
+        <>
+          <Button
+            ref={navigationPrevRef}
+            css={css`
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%);
+              left: -60px;
+              background-color: #fff;
+              &:hover {
+                background-color: #f8f8f8;
+              }
+            `}
+          >
+            <Icon.ChevronLeft />
+          </Button>
+          <Button
+            ref={navigationNextRef}
+            css={css`
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%);
+              right: -60px;
+              background-color: #fff;
+              &:hover {
+                background-color: #f8f8f8;
+              }
+            `}
+          >
+            <Icon.ChevronRight />
+          </Button>
+        </>
+      )}
     </div>
   );
 }
