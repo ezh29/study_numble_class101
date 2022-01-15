@@ -1,29 +1,48 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
 import SwiperSlider from "./components/Carousel/SwiperSlider";
 import { SwiperSlide } from "swiper/react";
 import { Grid, Row, Col, Section } from "@class101/ui";
 
+import Header from "./components/Header/Header";
 import CardTimeDeal from "./components/Card/CardTimeDeal";
 import CardMdDeal from "./components/Card/CardMdDeal";
 import CardPopularEvent from "./components/Card/CardPopularEvent";
 import CardOpenSoon from "./components/Card/CardOpenSoon";
+import SectionMargin from "./components/Card/SectionMargin";
+import MainSlider from "./components/Slider/MainSlider";
 
 function App() {
+  const [topEventDatas, setTopEventDatas] = useState<any[]>([]);
+  const [bottomEventData, setBottomEventDatas] = useState<any[]>([]);
   const [timeDealDatas, setTimeDealDatas] = useState<any[]>([]);
   const [mdRecommendDatas, setMdRecommendDatas] = useState<any[]>([]);
   const [popularEventDatas, setPopularEventDatas] = useState<any[]>([]);
   const [openSoonDatas, setOpenSoonDatas] = useState<any[]>([]);
 
   useEffect(() => {
+    //상단 이벤트 Carousel 데이터
+    getTopEventDatas();
+    //하단 이벤트 Carousel 데이터
+    getBottomEventDatas();
+    //클래스 데이터
     getTimeDealDatas();
     getMdRecommendDatas();
     getPopularEventDatas();
     getOpenSoonDatas();
   }, []);
 
+  //상단 이벤트 Carousel 데이터
+  async function getTopEventDatas() {
+    const jsonDatas = require("./json/data.json");
+    setTopEventDatas(jsonDatas.top_event);
+  }
+  //하단 이벤트 Carousel 데이터
+  async function getBottomEventDatas() {
+    const jsonDatas = require("./json/data.json");
+    setBottomEventDatas(jsonDatas.bottom_event);
+  }
+  //클래스 데이터
   // 오늘의 특가! TIMEDEAL
   async function getTimeDealDatas() {
     const jsonDatas = require("./json/data.json");
@@ -48,7 +67,13 @@ function App() {
   return (
     <>
       <Grid maxWidthNone={false}>
-        <Row>{/* <Header></Header> */}</Row>
+        <Row>
+          <Header></Header>
+        </Row>
+      </Grid>
+      <MainSlider data={topEventDatas} />
+      <SectionMargin />
+      <Grid maxWidthNone={false}>
         <Row>
           <Col lg={12}>
             <Section
@@ -79,6 +104,7 @@ function App() {
                 ))}
               </SwiperSlider>
             </Section>
+            <SectionMargin />
             <Section title="MD 추천 클래스" to="/">
               <SwiperSlider
                 slidesPerViewLg={4}
@@ -103,6 +129,7 @@ function App() {
                 ))}
               </SwiperSlider>
             </Section>
+            <SectionMargin />
             <Section
               title="진행중인 인기 이벤트"
               to="/"
@@ -126,6 +153,7 @@ function App() {
                 ))}
               </SwiperSlider>
             </Section>
+            <SectionMargin />
             <Section
               title="오픈 예정 클래스"
               description="오픈 예정인 클래스를 응원하면 얼리버드 오픈 시 알려드려요!"
