@@ -7,7 +7,7 @@ import React, {
 } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { Row, Icon, Headline2, Body1, Colors } from "@class101/ui";
+import { Row, Icon, Headline2, Body1, Colors, Badge } from "@class101/ui";
 
 import { Swiper } from "swiper/react";
 import { SwiperSlide } from "swiper/react";
@@ -131,6 +131,21 @@ function MainSlider({ data: topEventDatas, length }: MainSliderProps) {
                         width: 100%;
                       `}
                     ></img>
+                    {topEventData.badge && (
+                      <Badge
+                        size="md"
+                        color={Colors.white}
+                        backgroundColor={topEventData.bdColor}
+                        css={css`
+                          position: absolute;
+                          top: 10px;
+                          left: 10px;
+                          font-size: 16px !important;
+                        `}
+                      >
+                        {topEventData.badge}
+                      </Badge>
+                    )}
                   </SwiperSlide>
                 ))}
               </Swiper>
