@@ -76,7 +76,6 @@ function SwiperSlider({
         position: relative;
       `}
     >
-      {currentIndex}/{length}
       <Swiper
         ref={swiperRef}
         {...settings}
