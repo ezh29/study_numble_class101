@@ -32,7 +32,6 @@ function CardOpenSoon({
   score,
   finishDate,
 }: CardOpenSoonProps) {
-
   return (
     <Card
       to={"/"}
@@ -57,8 +56,17 @@ function CardOpenSoon({
           display: flex;
         `}
       >
-        <Caption1 color={Colors.gray600} css={css`margin-right:4px`}>응원 마감까지</Caption1>
-        <Caption1 color={Colors.black}>{dayjs(finishDate).diff(dayjs(), "day")}일 남음</Caption1>
+        <Caption1
+          color={Colors.gray600}
+          css={css`
+            padding-right: 4px;
+          `}
+        >
+          응원 마감까지
+        </Caption1>
+        <Caption1 color={Colors.black}>
+          {dayjs(finishDate).diff(dayjs(), "day")}일 남음
+        </Caption1>
       </div>
 
       <Button

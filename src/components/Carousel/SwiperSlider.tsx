@@ -99,9 +99,9 @@ function SwiperSlider({
               top: 50%;
               transform: translateY(-50%);
               left: -60px;
-              background-color: #fff;
+              background-color: #ffffff !important;
               &:hover {
-                background-color: #f8f8f8;
+                background-color: #f8f8f8 !important;
               }
             `}
           >
@@ -114,9 +114,9 @@ function SwiperSlider({
               top: 50%;
               transform: translateY(-50%);
               right: -60px;
-              background-color: #fff;
+              background-color: #ffffff !important;
               &:hover {
-                background-color: #f8f8f8;
+                background-color: #f8f8f8 !important;
               }
             `}
           >
