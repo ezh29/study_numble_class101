@@ -7,7 +7,12 @@ import HeaderSearch from "../Header/HeaderSearch";
 import HeaderSubMenu from "../Header/HeaderSubMenu";
 import HeaderNav from "./HeaderNav";
 
-function Header() {
+interface HeaderProps {
+  isPc: boolean;
+  isTablet: boolean;
+  isMobile: boolean;
+}
+function Header({ isPc, isTablet, isMobile }: HeaderProps) {
   return (
     <>
       <div
@@ -20,11 +25,11 @@ function Header() {
         `}
       >
         <HeaderLogo />
-        <HeaderMenu />
-        <HeaderSearch />
-        <HeaderSubMenu />
+        {isPc && <HeaderMenu />}
+        <HeaderSearch isPc={isPc} isTablet={isTablet} isMobile={isMobile} />
+        {isPc && <HeaderSubMenu />}
       </div>
-      <HeaderNav />
+      <HeaderNav isPc={isPc} isTablet={isTablet} isMobile={isMobile} />
     </>
   );
 }

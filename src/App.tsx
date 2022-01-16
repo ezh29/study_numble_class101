@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
 import "./App.css";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -14,14 +15,27 @@ import CardPopularEvent from "./components/Card/CardPopularEvent";
 import CardOpenSoon from "./components/Card/CardOpenSoon";
 import SectionMargin from "./components/Card/SectionMargin";
 import MainSlider from "./components/Slider/MainSlider";
+import MainSliderTablet from "./components/Slider/MainSliderTablet";
+import MainSliderMobile from "./components/Slider/MainSliderMobile";
+import BottomSlider from "./components/Slider/BottomSlider";
 
 function App() {
   const [topEventDatas, setTopEventDatas] = useState<any[]>([]);
-  const [bottomEventData, setBottomEventDatas] = useState<any[]>([]);
+  const [bottomEventDatas, setBottomEventDatas] = useState<any[]>([]);
   const [timeDealDatas, setTimeDealDatas] = useState<any[]>([]);
   const [mdRecommendDatas, setMdRecommendDatas] = useState<any[]>([]);
   const [popularEventDatas, setPopularEventDatas] = useState<any[]>([]);
   const [openSoonDatas, setOpenSoonDatas] = useState<any[]>([]);
+
+  const isPc = useMediaQuery({
+    query: "(min-width:1024px)",
+  });
+  const isTablet = useMediaQuery({
+    query: "(min-width:768px) and (max-width:1023px)",
+  });
+  const isMobile = useMediaQuery({
+    query: "(max-width:767px)",
+  });
 
   useEffect(() => {
     //상단 이벤트 Carousel 데이터
@@ -71,10 +85,17 @@ function App() {
     <>
       <Grid>
         <Row>
-          <Header></Header>
+          <Header isPc={isPc} isTablet={isTablet} isMobile={isMobile}></Header>
         </Row>
       </Grid>
-      <MainSlider data={topEventDatas} length={topEventDatas.length} />
+      {isPc && (
+        <MainSlider data={topEventDatas} length={topEventDatas.length} />
+      )}
+      {isTablet && (
+        <MainSliderTablet data={topEventDatas} length={topEventDatas.length} />
+      )}
+      {isMobile && <MainSliderMobile data={topEventDatas} />}
+
       <SectionMargin />
       <Grid>
         <Row>
@@ -89,8 +110,8 @@ function App() {
                 slidesPerViewSm={2}
                 length={timeDealDatas.length}
               >
-                {timeDealDatas.map((timeDealData) => (
-                  <SwiperSlide key={timeDealData.id}>
+                {timeDealDatas.map((timeDealData, index) => (
+                  <SwiperSlide key={index}>
                     <CardTimeDeal
                       key={timeDealData.id}
                       title={timeDealData.title}
@@ -114,8 +135,8 @@ function App() {
                 slidesPerViewSm={2}
                 length={mdRecommendDatas.length}
               >
-                {mdRecommendDatas.map((mdRecommendData) => (
-                  <SwiperSlide key={mdRecommendData.id}>
+                {mdRecommendDatas.map((mdRecommendData, index) => (
+                  <SwiperSlide key={index}>
                     <CardMdDeal
                       key={mdRecommendData.id}
                       title={mdRecommendData.title}
@@ -143,8 +164,8 @@ function App() {
                 slidesPerViewSm={2}
                 length={popularEventDatas.length}
               >
-                {popularEventDatas.map((popularEventData) => (
-                  <SwiperSlide key={popularEventData.id}>
+                {popularEventDatas.map((popularEventData, index) => (
+                  <SwiperSlide key={index}>
                     <CardPopularEvent
                       key={popularEventData.id}
                       title={popularEventData.title}
@@ -186,6 +207,14 @@ function App() {
           </Col>
         </Row>
       </Grid>
+      <SectionMargin />
+      <BottomSlider
+        data={bottomEventDatas}
+        isPc={isPc}
+        isTablet={isTablet}
+        isMobile={isMobile}
+      />
+      <SectionMargin />
     </>
   );
 }
