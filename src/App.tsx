@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 import SwiperSlider from "./components/Carousel/SwiperSlider";
 import { SwiperSlide } from "swiper/react";
-import { Grid, Row, Col, Section } from "@class101/ui";
+import { Row, Col, Section } from "@class101/ui";
 
+import Grid from "./layout/Grid/Grid";
 import Header from "./components/Header/Header";
 import CardTimeDeal from "./components/Card/CardTimeDeal";
 import CardMdDeal from "./components/Card/CardMdDeal";
@@ -66,14 +69,14 @@ function App() {
 
   return (
     <>
-      <Grid maxWidthNone={false}>
+      <Grid>
         <Row>
           <Header></Header>
         </Row>
       </Grid>
-      <MainSlider data={topEventDatas} />
+      <MainSlider data={topEventDatas} length={topEventDatas.length} />
       <SectionMargin />
-      <Grid maxWidthNone={false}>
+      <Grid>
         <Row>
           <Col lg={12}>
             <Section
