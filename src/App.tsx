@@ -83,7 +83,7 @@ function App() {
 
   return (
     <>
-      <Grid>
+      <Grid isPc={isPc} isTablet={isTablet} isMobile={isMobile}>
         <Row>
           <Header isPc={isPc} isTablet={isTablet} isMobile={isMobile}></Header>
         </Row>
@@ -97,7 +97,7 @@ function App() {
       {isMobile && <MainSliderMobile data={topEventDatas} />}
 
       <SectionMargin />
-      <Grid>
+      <Grid isPc={isPc} isTablet={isTablet} isMobile={isMobile}>
         <Row>
           <Col lg={12}>
             <Section
