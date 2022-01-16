@@ -7,15 +7,7 @@ import React, {
 } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import {
-  Grid,
-  Row,
-  Button,
-  Icon,
-  Headline2,
-  Body1,
-  Colors,
-} from "@class101/ui";
+import { Row, Icon, Headline2, Body1, Colors } from "@class101/ui";
 
 import { Swiper } from "swiper/react";
 import { SwiperSlide } from "swiper/react";
@@ -23,16 +15,22 @@ import { Navigation, Autoplay, Pagination, Controller } from "swiper";
 import "swiper/scss";
 import "swiper/scss/navigation";
 import "swiper/scss/pagination";
+
+import Grid from "../../layout/Grid/Grid";
+
 interface MainSliderProps {
   data: any;
+  length: Number;
 }
-function MainSlider({ data: topEventDatas }: MainSliderProps) {
+function MainSlider({ data: topEventDatas, length }: MainSliderProps) {
   // Swiper instance
   const swiperRef = useRef<any>(null);
   const navigationPrevRef = useRef(null);
   const navigationNextRef = useRef(null);
+  const progressBarRepeat = useRef<any>(null);
   const [controlledSwiper, setControlledSwiper] = useState(null);
   const [controlledSwiper2, setControlledSwiper2] = useState(null);
+  const [sliderProgressBar, setSliderProgressBar] = useState(50);
   // Slides current index
   const [currentIndex, updateCurrentIndex] = useState(0);
   // Swiper settings
@@ -54,16 +52,17 @@ function MainSlider({ data: topEventDatas }: MainSliderProps) {
     }),
     []
   );
-  const updateIndex = useCallback(
-    () => updateCurrentIndex(swiperRef.current.swiper.realIndex),
-    []
-  );
+  const updateIndex = useCallback(() => {
+    updateCurrentIndex(swiperRef.current.swiper.realIndex);
+    setSliderProgressBar(0);
+  }, []);
   // Add eventlisteners for swiper after initializing
   useEffect(() => {
     const swiperInstance = swiperRef.current.swiper;
     if (swiperInstance) {
       swiperInstance.on("slideChange", updateIndex);
     }
+
     return () => {
       if (swiperInstance) {
         swiperInstance.off("slideChange", updateIndex);
@@ -71,9 +70,17 @@ function MainSlider({ data: topEventDatas }: MainSliderProps) {
     };
   }, [updateIndex]);
 
+  const startSliderProgressBar = () => {
+    if (sliderProgressBar >= 100) {
+      clearInterval(progressBarRepeat.current);
+    } else {
+      setSliderProgressBar((prve) => prve + 1);
+    }
+  };
+
   useEffect(() => {
-    console.log(currentIndex, swiperRef.current.swiper.realIndex);
-  }, [currentIndex]);
+    progressBarRepeat.current = setInterval(startSliderProgressBar, 3000 / 100);
+  }, []);
 
   return (
     <div
@@ -84,7 +91,7 @@ function MainSlider({ data: topEventDatas }: MainSliderProps) {
         backgroundImage: `url(${topEventDatas[currentIndex + 1]?.img})`,
       }}
     >
-      <Grid maxWidthNone={false}>
+      <Grid>
         <Row>
           {/* main slide wrap */}
           <div
@@ -136,7 +143,7 @@ function MainSlider({ data: topEventDatas }: MainSliderProps) {
               onSwiper={setControlledSwiper}
               controller={{ control: controlledSwiper2 }}
               css={css`
-                width: 300px;
+                width: 525px;
                 position: absolute;
                 top: 0;
                 right: 0;
@@ -144,7 +151,6 @@ function MainSlider({ data: topEventDatas }: MainSliderProps) {
             >
               {topEventDatas.map((topEventData: any, index: number) => (
                 <SwiperSlide key={topEventData.id}>
-                  {index}
                   <Headline2
                     color={Colors.white}
                     css={css`
@@ -157,58 +163,79 @@ function MainSlider({ data: topEventDatas }: MainSliderProps) {
                 </SwiperSlide>
               ))}
             </Swiper>
-            {/* <div
+            {/* nav */}
+            <div
               css={css`
-                width: 300px;
+                display: flex;
+                align-items: center;
                 position: absolute;
-                top: 0;
-                right: 0;
+                right: 0px;
+                bottom: 50px;
+                width: 525px;
               `}
             >
-              <Headline2
-                color={Colors.white}
+              <div
                 css={css`
-                  margin-bottom: 0.5em;
+                  width: 50px;
+                  font-size: 12px;
+                  color: rgb(255, 255, 255);
+                  cursor: default;
+                  margin-right: 8px;
                 `}
               >
-                {topEventDatas[currentIndex]?.title}
-              </Headline2>
-              <Body1 color={Colors.gray300}>
-                {topEventDatas[currentIndex]?.subtitle}
-              </Body1>
-            </div> */}
+                <span
+                  css={css`
+                    font-weight: bold;
+                    padding-right: 8px;
+                    border-right: 1px solid rgba(255, 255, 255, 0.4);
+                  `}
+                >
+                  {currentIndex + 1}
+                </span>
+                <span
+                  css={css`
+                    padding: 0px 0px 0px 8px;
+                  `}
+                >
+                  {length}
+                </span>
+              </div>
+              {/* ProgressBar */}
+              <div
+                css={{
+                  position: "relative",
+                  height: "1px",
+                  width: "100%",
+                  backgroundColor: `${Colors.gray800}`,
+                  overflow: "hidden",
+                }}
+              >
+                <div
+                  style={{
+                    width: `${sliderProgressBar}%`,
+                    position: "absolute",
+                    backgroundColor: `${Colors.white}`,
+                    height: "1px",
+                  }}
+                ></div>
+              </div>
 
-            {/* nav */}
-            <Button
-              ref={navigationPrevRef}
-              css={css`
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-                left: -60px;
-                background-color: #fff;
-                &:hover {
-                  background-color: #f8f8f8;
-                }
-              `}
-            >
-              <Icon.ChevronLeft />
-            </Button>
-            <Button
-              ref={navigationNextRef}
-              css={css`
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-                right: -60px;
-                background-color: #fff;
-                &:hover {
-                  background-color: #f8f8f8;
-                }
-              `}
-            >
-              <Icon.ChevronRight />
-            </Button>
+              {/* prev next btn */}
+              <div
+                css={css`
+                  cursor: pointer;
+                  padding-left: 10px;
+                  width: 80px;
+                `}
+              >
+                <span ref={navigationPrevRef} css={css``}>
+                  <Icon.ChevronLeft fillColor={Colors.white} />
+                </span>
+                <span ref={navigationNextRef} css={css``}>
+                  <Icon.ChevronRight fillColor={Colors.white} />
+                </span>
+              </div>
+            </div>
           </div>
         </Row>
       </Grid>
