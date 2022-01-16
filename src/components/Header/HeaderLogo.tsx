@@ -10,7 +10,7 @@ function HeaderLogo() {
         display: flex;
         -webkit-box-align: center;
         align-items: center;
-        height: 24px;
+        max-width: 130px;
 
         margin-right: 28px;
       `}
