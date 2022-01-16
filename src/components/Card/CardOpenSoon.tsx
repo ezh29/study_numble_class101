@@ -54,6 +54,7 @@ function CardOpenSoon({
       <div
         css={css`
           display: flex;
+          margin-bottom: 10px;
         `}
       >
         <Caption1

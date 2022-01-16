@@ -80,7 +80,7 @@ function CardPopularEvent({
               color="red"
               fontWeight="700"
               css={css`
-                margin-right: 4px;
+                padding-right: 4px;
               `}
             >
               D-{getDdayFromToday(finishDate)}

@@ -13,7 +13,7 @@ function CardTimeDealTimer() {
       css={css`
         width: 100%;
         display: flex;
-        justify-content: flex-start;
+        justify-content: flex-start !important;
         margin-bottom: 6px;
       `}
     >

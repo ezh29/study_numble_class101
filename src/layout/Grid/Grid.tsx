@@ -11,6 +11,9 @@ function Grid({ children }: GridProps) {
       css={css`
         max-width: 1176px;
         margin: 0 auto;
+        padding: 0px 24px;
+        position: relative;
+        overflow: hidden;
       `}
     >
       {children}

@@ -18,7 +18,7 @@ function CardGoalScore({ goal, score }: CardGoalScoreProps) {
           color={Colors.red600}
           size="sm"
           css={css`
-            padding: 0;
+            padding: 0 !important;
             padding-right: 6px;
           `}
         >
