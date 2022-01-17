@@ -32,6 +32,8 @@
 - emotion
 - react-responsive
 - swiper
+### 소요 기간
+- 5일
 ### 결과물
 ### vercel 링크
 https://study-numble-class101.vercel.app/
